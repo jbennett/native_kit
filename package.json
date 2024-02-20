@@ -1,5 +1,5 @@
 {
-  "name": "noticed-web_push",
+  "name": "native_kit",
   "type": "module",
   "version": "0.0.1",
   "description": "Javascript helpers for NativeKit",

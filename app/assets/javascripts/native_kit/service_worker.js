@@ -40,12 +40,12 @@ self.addEventListener('pushsubscriptionchange', async (event) => {
 })
 
 export function setBadgeCount(count) {
-  if (!window.navigator || !("setAppBadge" in navigator)) return;
+  if (!navigator || !("setAppBadge" in navigator)) return;
   // check for permissions first
 
-  navigator
-    .setAppBadge(count)
-    .catch(error =>  {
-      console.error("Native Kit failed to set app badge", error);
-    }
+  if (count && count > 0) {
+    navigator.setAppBadge(count)
+  } else {
+    navigator.clearAppBadge()
+  }
 }
