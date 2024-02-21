@@ -2,7 +2,7 @@ ENGINE_MOUNT_PATH = null
 VERSION = 1
 
 export function start(options) {
-  ENGINE_MOUNT_PATH = options.mounted_path
+    ENGINE_MOUNT_PATH = options.mounted_path
 }
 
 self.addEventListener('push', event => {
@@ -40,12 +40,12 @@ self.addEventListener('pushsubscriptionchange', async (event) => {
 })
 
 export function setBadgeCount(count) {
-  if (!navigator || !("setAppBadge" in navigator)) return;
-  // check for permissions first
+    if (!navigator || !("setAppBadge" in navigator)) return;
+    if (count === undefined) return
 
-  if (count && count > 0) {
-    navigator.setAppBadge(count)
-  } else {
-    navigator.clearAppBadge()
-  }
+    if (count && count > 0) {
+        navigator.setAppBadge(count)
+    } else {
+        navigator.clearAppBadge()
+    }
 }
