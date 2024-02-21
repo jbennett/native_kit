@@ -15,11 +15,11 @@ export async function requestNotifications() {
     return result === "granted"
 }
 
-export async function setupSubscription() {
+export async function setupSubscription(vapidName) {
     if (window.Notification?.permission !== "granted") return
     if (!navigator.serviceWorker) return
 
-    let key_bytes = document.querySelector("meta[name=web_push_public]")?.content
+    let key_bytes = document.querySelector(`meta[name=${vapidName}]`)?.content
     let vapid = new Uint8Array(JSON.parse(key_bytes))
 
     const registration = await navigator.serviceWorker.ready
@@ -33,7 +33,6 @@ export async function saveSubscription(subscriptionsPath) {
     if (window.Notification?.permission !== "granted") return
     if (!navigator.serviceWorker) return
 
-    const registration = await navigator.serviceWorker.ready
     const subscription = await getSubscription()
     if (!subscription) return
 
