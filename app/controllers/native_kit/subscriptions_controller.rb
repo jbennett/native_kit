@@ -5,7 +5,9 @@ class NativeKit::SubscriptionsController < ApplicationController
 
   def create
     subscriber = current_user # TODO: Allow override in initializer
-    NativeKit::WebPushSubscription.find_or_create_by!(subscriber: subscriber, endpoint: params[:endpoint], auth_key: params[:keys][:auth], p256dh_key: params[:keys][:p256dh])
+    subscription = NativeKit::WebPushSubscription.find_or_initialize_by(subscriber: subscriber, endpoint: params[:endpoint], auth_key: params[:keys][:auth], p256dh_key: params[:keys][:p256dh])
+    subscription.user_agent = params[:user_agent]
+    subscription.save!
 
     head :ok
   end

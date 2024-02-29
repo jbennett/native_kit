@@ -41,7 +41,7 @@ export async function saveSubscription(subscriptionsPath) {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(subscription)
+        body: JSON.stringify({...subscription.toJSON(), user_agent: window?.navigator?.userAgent})
     })
 }
 
