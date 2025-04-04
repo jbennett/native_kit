@@ -28,7 +28,11 @@ class NativeKit::PwaController < ApplicationController
   end
 
   def propshaft_path(filename)
-    File.join(Rails.root, "public", Rails.application.assets.resolver.resolve(filename))
+    if Rails.application.assets.resolver.is_a? Propshaft::Resolver::Static
+      File.join(Rails.root, "public", Rails.application.assets.resolver.resolve(filename))
+    else
+      Rails.application.assets.resolver.load_path.find("service_worker.js").path
+    end
   end
 
   def sprockets_path(filename)
