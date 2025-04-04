@@ -20,6 +20,18 @@ class NativeKit::PwaController < ApplicationController
   end
 
   def get_full_path_to_asset(filename)
+    if defined?(Propshaft)
+      propshaft_path(filename)
+    else
+      sprockets_path(filename)
+    end
+  end
+
+  def propshaft_path(filename)
+    File.join(Rails.root, "public", Rails.application.assets.resolver.resolve(filename))
+  end
+
+  def sprockets_path(filename)
     manifest_file = Rails.application.assets_manifest.assets[filename]
     if manifest_file
       File.join(Rails.application.assets_manifest.directory, manifest_file)
